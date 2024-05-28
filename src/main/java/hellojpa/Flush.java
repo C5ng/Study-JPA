@@ -16,13 +16,13 @@ public class Flush {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Member member = new Member();
-            member.setId(200L);
-            member.setName("Flush");
-
-            em.flush(); // Insert Query 커밋 후에 가는 것이 아닌 즉시 나간다.
-
-            System.out.println("===================");
+//            Member member = new Member();
+//            member.setId(200L);
+//            member.setName("Flush");
+//
+//            em.flush(); // Insert Query 커밋 후에 가는 것이 아닌 즉시 나간다.
+//
+//            System.out.println("===================");
 
             tx.commit();
         } catch (Exception e) {

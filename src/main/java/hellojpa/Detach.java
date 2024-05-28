@@ -14,15 +14,15 @@ public class Detach {
         tx.begin(); // 트랜잭션 시작
 
         try {
-            Member member = new Member();
-            member.setId(200L);
-            member.setName("Flush");
-
-            em.detach(member); // 영속성 컨텍스트에서 제거
-
-            System.out.println("===================");
-
-            member.setName("Detach"); // Update 되지 않는다.
+//            Member member = new Member();
+//            member.setId(200L);
+//            member.setName("Flush");
+//
+//            em.detach(member); // 영속성 컨텍스트에서 제거
+//
+//            System.out.println("===================");
+//
+//            member.setName("Detach"); // Update 되지 않는다.
 
             tx.commit();
         } catch (Exception e) {

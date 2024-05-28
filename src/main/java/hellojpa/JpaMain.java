@@ -28,9 +28,24 @@ public class JpaMain {
 
             List<Member> resultList = em.createQuery("select m from Member as m", Member.class)
                     .getResultList(); // JPQL
+
             for (Member member1 : resultList) {
                 System.out.println(member1.getName());
             }
+
+            // 비영속
+            Member member2 = new Member();
+            member.setId(100L);
+            member.setName("Context");
+
+            // 영속, 이 때 DB에 저장되는 것이 아닌 컨텍스트에 저장된다.
+            em.persist(member2);
+
+            // 준영, 영속성 컨텍스트에서 분리
+            em.detach(member2);
+
+            // 삭제
+            em.remove(member2);
 
             tx.commit(); // 트랜잭션 커밋
         } catch (Exception e) {

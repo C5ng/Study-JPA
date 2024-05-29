@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity // pk 정의 필수
 //@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq") SEQUENCE 관리
-public class Member {
+public class MemberTest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY, SEQUENCE, TABLE, AUTO
     private Long id;
@@ -28,6 +28,6 @@ public class Member {
     @Lob
     private String description;
 
-    public Member() {
+    public MemberTest() {
     }
 }

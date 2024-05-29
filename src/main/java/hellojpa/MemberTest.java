@@ -8,26 +8,49 @@ import java.util.Date;
 //@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq") SEQUENCE 관리
 public class MemberTest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY, SEQUENCE, TABLE, AUTO
+    @GeneratedValue // IDENTITY, SEQUENCE, TABLE, AUTO
+    @Column(name = "MEMBER_ID")
     private Long id;
 
-    @Column(name = "name") // unique 제약조건, 길이 제한 등 @Column 속성으로 여러 조건 추가 가능
+    @Column(name = "USERNAME")
     private String username;
 
-    private Integer age;
+//    @Column(name = "TEAM_ID")
+//    private Long teamId; // 객체가 아닌 테이블에 모델링
 
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID") // join하는 컬럼 즉 여기선 MemberTest에 TEAM_ID Column
+    private Team team; // teamId를 아예 Team으로 선언한다. -> 서로 관계를 정의해야함 ex) 1:N, 1:1 ...
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-
-    @Lob
-    private String description;
-
-    public MemberTest() {
+    public Team getTeam() {
+        return team;
     }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+//    public Long getTeamId() {
+//        return teamId;
+//    }
+//
+//    public void setTeamId(Long teamId) {
+//        this.teamId = teamId;
+//    }
 }

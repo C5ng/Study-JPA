@@ -13,6 +13,21 @@ public class JpaMain {
         tx.begin(); // 트랜잭션 시작
 
         try {
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team); // 영속 상태가 되면 무조건 PK값이 세팅 된다.
+
+            MemberTest memberTest = new MemberTest();
+            memberTest.setUsername("member1");
+//            memberTest.setTeamId(team.getId()); // 객체스럽지 못한 이슈 발생
+            memberTest.setTeam(team); // 참조형태로 수정
+            em.persist(memberTest);
+
+            MemberTest findMember = em.find(MemberTest.class, memberTest.getId());
+//            Team findTeam = em.find(Team.class, findMember.getTeamId()); // Team을 바로 꺼내지 못한다. -> 연관관계가 앖기 때문
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam);
+
 //            Member member = new Member();
 //            member.setId(2L);
 //            member.setName("HelloB");

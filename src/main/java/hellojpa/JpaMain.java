@@ -25,9 +25,13 @@ public class JpaMain {
 
             MemberTest findMember = em.find(MemberTest.class, memberTest.getId());
 //            Team findTeam = em.find(Team.class, findMember.getTeamId()); // Team을 바로 꺼내지 못한다. -> 연관관계가 앖기 때문
-            Team findTeam = findMember.getTeam();
-            System.out.println("findTeam = " + findTeam);
+//            Team findTeam = findMember.getTeam();
+//            System.out.println("findTeam = " + findTeam);
 
+            List<MemberTest> members = findMember.getTeam().getMembers();
+            for (MemberTest member : members) {
+                System.out.println("m: " + member.getUsername());
+            }
 //            Member member = new Member();
 //            member.setId(2L);
 //            member.setName("HelloB");

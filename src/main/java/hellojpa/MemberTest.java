@@ -26,8 +26,9 @@ public class MemberTest {
         return team;
     }
 
-    public void setTeam(Team team) {
+    public void changeTeam(Team team) { // getter, setter 관례로 되어있음. 다른 메서드 명 사용
         this.team = team;
+        team.getMembers().add(this); // 연관관계 편의 메서드
     }
 
     public Long getId() {

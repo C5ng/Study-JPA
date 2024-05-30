@@ -20,7 +20,7 @@ public class JpaMain {
             MemberTest memberTest = new MemberTest();
             memberTest.setUsername("member1");
 //            memberTest.setTeamId(team.getId()); // 객체스럽지 못한 이슈 발생
-            memberTest.setTeam(team); // 참조형태로 수정
+            memberTest.changeTeam(team); // 참조형태로 수정
             em.persist(memberTest);
 
             MemberTest findMember = em.find(MemberTest.class, memberTest.getId());

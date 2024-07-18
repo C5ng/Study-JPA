@@ -67,14 +67,23 @@ public class JpaMain {
 
             /* 플러시 */
 
-            Member member = new Member(200L, "200");
+            /* Member member = new Member(200L, "200");
             em.persist(member);
 
             em.flush(); // 플러시, 1차 캐시는 유지 된다.
 
-            System.out.println("===============");
+            System.out.println("==============="); */
 
             /* 플러시 */
+
+            /* 준영속 */
+
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAA");
+
+            em.detach(member); // Select 쿼리만 실행되고 Update 쿼리는 실행되지 않는다.
+
+            /* 준영속 */
 
             tx.commit();
         } catch (Exception e) {

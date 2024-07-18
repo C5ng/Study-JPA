@@ -58,12 +58,23 @@ public class JpaMain {
 
             em.persist(member1);
             em.persist(member2); */ // 쓰기 지연 저장소에 쌓아둔다.
-            System.out.println("=======================");
+            /* System.out.println("=======================");
 
             Member member = em.find(Member.class, 150L);
-            member.setName("HI"); // 변경 감지
+            member.setName("HI"); */ // 변경 감지
 
             /* 영속성 컨텍스트 2 */
+
+            /* 플러시 */
+
+            Member member = new Member(200L, "200");
+            em.persist(member);
+
+            em.flush(); // 플러시, 1차 캐시는 유지 된다.
+
+            System.out.println("===============");
+
+            /* 플러시 */
 
             tx.commit();
         } catch (Exception e) {

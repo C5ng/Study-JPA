@@ -78,10 +78,10 @@ public class JpaMain {
 
             /* 준영속 */
 
-            Member member = em.find(Member.class, 150L);
+            /* Member member = em.find(Member.class, 150L);
             member.setName("AAAAA");
 
-            em.detach(member); // Select 쿼리만 실행되고 Update 쿼리는 실행되지 않는다.
+            em.detach(member); */ // Select 쿼리만 실행되고 Update 쿼리는 실행되지 않는다.
 
             /* 준영속 */
 

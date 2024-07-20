@@ -1,9 +1,9 @@
 package hellojpa.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -11,6 +11,9 @@ public class Item {
     @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
+
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     private String name;
     private String price;

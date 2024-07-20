@@ -97,9 +97,15 @@ public class JpaMain {
             member.setTeam(team);
             em.persist(member);
 
+            em.flush();
+            em.clear();
+
             Member findMember = em.find(Member.class, member.getId());
             Team team1 = findMember.getTeam();
-            System.out.println("team1.getName() = " + team1.getName());
+            List<Member> members = team1.getMembers();
+            for (Member member1 : members) {
+                System.out.println("member1 = " + member1);
+            }
             // Team findTeam = em.find(Team.class, teamId); // 객체 지향적이지 않다.
 
             /* 단방향 연관관계 */

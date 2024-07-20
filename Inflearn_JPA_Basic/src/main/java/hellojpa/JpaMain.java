@@ -270,7 +270,7 @@ public class JpaMain {
 
             /* 영속성 전이와 고아 객체 */
 
-            Child child1 = new Child();
+            /* Child child1 = new Child();
             Child child2 = new Child();
 
             Parent parent = new Parent();
@@ -287,11 +287,13 @@ public class JpaMain {
             em.clear();
 
             Parent findParent = em.find(Parent.class, parent.getId());
-            findParent.getChildList().remove(0); // 부모 객체와 끊긴 자식 개체는 remove 쿼리를 호출한다. 고아객체
-
-
+            findParent.getChildList().remove(0);*/ // 부모 객체와 끊긴 자식 개체는 remove 쿼리를 호출한다. 고아객체
 
             /* 영속성 전이와 고아 객체 */
+
+            /* 기본값 타입 */
+
+            /* 기본값 타입 */
 
             tx.commit();
         } catch (Exception e) {

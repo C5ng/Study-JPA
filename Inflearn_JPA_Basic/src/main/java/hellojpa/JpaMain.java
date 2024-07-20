@@ -112,7 +112,7 @@ public class JpaMain {
 
             /* 양방향 매핑시 연관관계의 주인 */
 
-            Team team = new Team();
+            /* Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
@@ -130,9 +130,27 @@ public class JpaMain {
             List<Member> members = findTeam.getMembers(); // team.getMembers().add(member)를 하지 않아도 Team에서 Member 데이터를 사용하는 시점에 쿼리를 실행한다.
             for (Member m : members) {
                 System.out.println("m = " + m.getUsername());
-            }
+            } */
 
             /* 양방향 매핑시 연관관계의 주인 */
+
+            /* 상속 관계 매핑 */
+
+            Movie movie = new Movie();
+            movie.setDirector("aaaa");
+            movie.setActor("bbbb");
+            movie.setName("바람과함께사라지다");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Movie findMove = em.find(Movie.class, movie.getId());
+            System.out.println("findMove = " + findMove); // Join해서 가져온다.
+
+            /* 상속 관계 매핑 */
 
             tx.commit();
         } catch (Exception e) {

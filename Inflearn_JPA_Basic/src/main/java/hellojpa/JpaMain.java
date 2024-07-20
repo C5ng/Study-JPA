@@ -246,7 +246,7 @@ public class JpaMain {
             
             /* 즉시 로딩과 지연 로딩 */
 
-            Team team = new Team();
+            /* Team team = new Team();
             team.setName("teamA");
             em.persist(team);
 
@@ -264,9 +264,34 @@ public class JpaMain {
 //                    .getResultList();
 
             List<Member> members2 = em.createQuery("select m from Member m join fetch m.team", Member.class)
-                    .getResultList(); // 한 번에 가져온다
+                    .getResultList();*/  // 한 번에 가져온다
 
             /* 즉시 로딩과 지연 로딩 */
+
+            /* 영속성 전이와 고아 객체 */
+
+            Child child1 = new Child();
+            Child child2 = new Child();
+
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
+
+            em.persist(parent);
+//            em.persist(child1);
+//            em.persist(child2);
+            // em.persist()를 3번 호출
+            // CascateType.ALL -> em.persist하면 같이 persist한다.
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0); // 부모 객체와 끊긴 자식 개체는 remove 쿼리를 호출한다. 고아객체
+
+
+
+            /* 영속성 전이와 고아 객체 */
 
             tx.commit();
         } catch (Exception e) {

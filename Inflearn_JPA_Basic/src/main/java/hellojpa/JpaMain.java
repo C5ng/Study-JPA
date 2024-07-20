@@ -136,7 +136,7 @@ public class JpaMain {
 
             /* 상속 관계 매핑 */
 
-            Movie movie = new Movie();
+            /* Movie movie = new Movie();
             movie.setDirector("aaaa");
             movie.setActor("bbbb");
             movie.setName("바람과함께사라지다");
@@ -148,16 +148,122 @@ public class JpaMain {
             em.clear();
 
             Movie findMove = em.find(Movie.class, movie.getId());
-            System.out.println("findMove = " + findMove); // Join해서 가져온다.
+            System.out.println("findMove = " + findMove); */ // Join해서 가져온다.
 
             /* 상속 관계 매핑 */
+
+            /* 프록시 */
+
+            /* Member member = em.find(Member.class, 1L);
+            printMember(member);
+            printMemberAndTeam(member); */
+
+            /* Member member = new Member();
+            member.setUsername("hello");
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+//            Member findMember = em.find(Member.class, member.getId());
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember.getClass() = " + findMember.getClass());
+            System.out.println("findMember.getId() = " + findMember.getId());
+            System.out.println("findMember.getUserName() = " + findMember.getUsername()); */
+            
+            // id는 쿼리가 호출되지 않고, username을 호출할때 쿼리가 호출된다.
+            // id는 값이 있기 때문
+            // username은 값이 DB에 있기 때문에 즉 실제 호출해야 할 수 있기 때문에 이때 호출한다.
+
+            /* Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            em.persist(member2);
+
+            em.flush();
+            em.clear();
+
+            Member m1 = em.find(Member.class, member1.getId());
+//            Member m2 = em.find(Member.class, member2.getId());
+
+//            System.out.println("m1 == m2: " + (m1.getClass() == m2.getClass())); // true
+
+            Member m2 = em.getReference(Member.class, member2.getId());
+//            System.out.println("m1 == m2: " + (m1.getClass() == m2.getClass())); // false
+            System.out.println("m1: " + (m1 instanceof Member)); // true
+            System.out.println("m2: " + (m1 instanceof Member)); */ // true
+
+            /* Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
+
+            em.flush();
+            em.clear();
+
+            Member m1 = em.find(Member.class, member1.getId());
+            System.out.println("m1 = " + m1.getClass());
+
+            Member reference = em.getReference(Member.class, member1.getId());
+            System.out.println("reference = " + reference.getClass());
+
+            System.out.println("a == a: " + (m1 == reference)); // 같은 Tx에서 가져오고 PK가 같으면 항상 True를 반환한다. */
+
+            /* Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
+
+            em.flush();
+            em.clear();
+
+            Member refMember = em.getReference(Member.class, member1.getId());
+            System.out.println("refMember = " + refMember.getClass()); // proxy
+
+            Member findMember = em.find(Member.class, member1.getId()); // find를 해도 proxy로 반환된다.
+            System.out.println("findMember = " + findMember.getClass());
+
+            System.out.println("refMember == findMember: " + (refMember == findMember)); */
+
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            em.persist(member1);
+
+            em.flush();
+            em.clear();
+
+            Member refMember = em.getReference(Member.class, member1.getId());
+            System.out.println("refMember = " + refMember.getClass());
+
+            em.detach(refMember); // 영속성 컨텍스트에서 제거된다.
+            // em.close() // 마찬가지
+
+            System.out.println("refMember = " + refMember.getUsername());
+
+            /* 프록시 */
 
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         } finally {
             em.close();
             emf.close();
         }
+    }
+
+    private static void printMember(Member member) {
+        String username = member.getUsername();
+        System.out.println("username = " + username);
+    }
+
+    private static void printMemberAndTeam(Member member) {
+        String username = member.getUsername();
+        System.out.println("username = " + username);
+
+        Team team = member.getTeam();
+        System.out.println("team = " + team.getName());
     }
 }

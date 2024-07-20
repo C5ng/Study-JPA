@@ -87,7 +87,7 @@ public class JpaMain {
 
             /* 단방향 연관관계 */
 
-            Team team = new Team();
+            /* Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
@@ -105,10 +105,34 @@ public class JpaMain {
             List<Member> members = team1.getMembers();
             for (Member member1 : members) {
                 System.out.println("member1 = " + member1);
-            }
+            } */
             // Team findTeam = em.find(Team.class, teamId); // 객체 지향적이지 않다.
 
             /* 단방향 연관관계 */
+
+            /* 양방향 매핑시 연관관계의 주인 */
+
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member");
+            member.changeTeam(team);
+            em.persist(member);
+
+            team.getMembers().add(member);
+
+            em.flush();
+            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers(); // team.getMembers().add(member)를 하지 않아도 Team에서 Member 데이터를 사용하는 시점에 쿼리를 실행한다.
+            for (Member m : members) {
+                System.out.println("m = " + m.getUsername());
+            }
+
+            /* 양방향 매핑시 연관관계의 주인 */
 
             tx.commit();
         } catch (Exception e) {

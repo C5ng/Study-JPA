@@ -19,8 +19,9 @@ public class Member extends BaseEntity {
 //    @Column(name = "TEAM_ID")
 //    private Long teamId; // 객체 지향적 X
 
-    @ManyToOne // Member 입장에선 여러명 Team 입장에선 하나
-    @JoinColumn(name = "TEAM_ID")
+//    @ManyToOne(fetch = FetchType.LAZY) // Member 입장에선 여러명 Team 입장에선 하나 // Froxy 객체로 조회
+    @ManyToOne(fetch = FetchType.EAGER) // 함께조회
+    @JoinColumn(name = "TEAM_ID")   
     private Team team;
 
     @OneToOne

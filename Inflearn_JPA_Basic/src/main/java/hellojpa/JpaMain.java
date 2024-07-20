@@ -227,7 +227,7 @@ public class JpaMain {
 
             System.out.println("refMember == findMember: " + (refMember == findMember)); */
 
-            Member member1 = new Member();
+            /* Member member1 = new Member();
             member1.setUsername("member1");
             em.persist(member1);
 
@@ -240,9 +240,33 @@ public class JpaMain {
             em.detach(refMember); // 영속성 컨텍스트에서 제거된다.
             // em.close() // 마찬가지
 
-            System.out.println("refMember = " + refMember.getUsername());
+            System.out.println("refMember = " + refMember.getUsername()); */
 
             /* 프록시 */
+            
+            /* 즉시 로딩과 지연 로딩 */
+
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.changeTeam(team);
+            em.persist(member1);
+
+            em.flush();
+            em.clear();
+
+            Member m = em.getReference(Member.class, member1.getId());
+
+//            List<Member> members = em.createQuery("select m from Member m", Member.class)
+//                    .getResultList();
+
+            List<Member> members2 = em.createQuery("select m from Member m join fetch m.team", Member.class)
+                    .getResultList(); // 한 번에 가져온다
+
+            /* 즉시 로딩과 지연 로딩 */
 
             tx.commit();
         } catch (Exception e) {

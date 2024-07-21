@@ -3,9 +3,7 @@ package hellojpa;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Member extends BaseEntity {
@@ -41,6 +39,19 @@ public class Member extends BaseEntity {
 
     @Embedded
     private Address Address;
+
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOODS",
+            joinColumns = @JoinColumn(name = "MEMBER_ID")
+    )
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "ADDRESS",
+            joinColumns = @JoinColumn(name = "MEMBER_ID")
+    )
+    private List<Address> addressHistory = new ArrayList<>();
 
     public void setTeam(Team team) {
         this.team = team;
@@ -102,5 +113,29 @@ public class Member extends BaseEntity {
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this); // 연관관계 편의 메서드
+    }
+
+    public List<MemberProduct> getMemberProducts() {
+        return memberProducts;
+    }
+
+    public void setMemberProducts(List<MemberProduct> memberProducts) {
+        this.memberProducts = memberProducts;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<hellojpa.Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<hellojpa.Address> addressHistory) {
+        this.addressHistory = addressHistory;
     }
 }

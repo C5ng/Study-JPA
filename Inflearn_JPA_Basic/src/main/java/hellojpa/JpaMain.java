@@ -301,7 +301,7 @@ public class JpaMain {
 
             /* 값 타입과 불변 객체 */
 
-            Address address = new Address("city", "street", "10000");
+            /* Address address = new Address("city", "street", "10000");
             address = new Address("asd","asd","asd");
             Member member = new Member();
             member.setUsername("member1");
@@ -313,9 +313,46 @@ public class JpaMain {
             member2.setAddress(address);
             em.persist(member2);
 
-            member.getAddress().setCity("newCity");
+            member.getAddress().setCity("newCity"); */
 
             /* 값 타입과 불변 객체 */
+
+            /* 값 타입 컬렉션 */
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAddress(new Address("homeCity", "street1", "zipcode1"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new Address("old1", "street1", "zipcode1"));
+            member.getAddressHistory().add(new Address("old2", "street1", "zipcode1"));
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            System.out.println("====================");
+            Member findMember = em.find(Member.class, member.getId());
+
+            List<Address> addressHistory = findMember.getAddressHistory();
+            for (Address address : addressHistory) {
+                System.out.println("address = " + address);
+            }
+
+            findMember.setAddress(new Address("newCity", "stree1", "zipcode1"));
+
+            // 치킨 -> 한식
+            findMember.getFavoriteFoods().remove("치킨");
+            findMember.getFavoriteFoods().add("한식");
+
+            findMember.getAddressHistory().remove(new Address("old1", "street1", "zipcode1"));
+            findMember.getAddressHistory().add(new Address("newCity1", "street1", "zipcode1"));
+
+            /* 값 타입 컬렉션 */
 
             tx.commit();
         } catch (Exception e) {

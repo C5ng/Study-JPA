@@ -295,6 +295,10 @@ public class JpaMain {
 
             /* 기본값 타입 */
 
+            /* 임베디드 타입 */
+
+            /* 임베디드 타입 */
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

@@ -42,6 +42,33 @@ public class Member extends BaseEntity {
     @Embedded
     private Address Address;
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
+
+    public hellojpa.Address getAddress() {
+        return Address;
+    }
+
+    public void setAddress(hellojpa.Address address) {
+        Address = address;
+    }
 
     public Long getId() {
         return id;

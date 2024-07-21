@@ -299,6 +299,24 @@ public class JpaMain {
 
             /* 임베디드 타입 */
 
+            /* 값 타입과 불변 객체 */
+
+            Address address = new Address("city", "street", "10000");
+            address = new Address("asd","asd","asd");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAddress(address);
+            em.persist(member);
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setAddress(address);
+            em.persist(member2);
+
+            member.getAddress().setCity("newCity");
+
+            /* 값 타입과 불변 객체 */
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

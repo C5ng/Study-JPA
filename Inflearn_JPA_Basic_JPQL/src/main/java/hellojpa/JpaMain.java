@@ -42,6 +42,10 @@ public class JpaMain {
 
             System.out.println("resultList = " + resultList);
 
+            em.createQuery("select m from Member m order by m.age desc", Member.class)
+                        .setFirstResult(1)
+                        .setMaxResults(10)
+                        .getResultList();
 
             tx.commit();
         } catch (Exception e) {

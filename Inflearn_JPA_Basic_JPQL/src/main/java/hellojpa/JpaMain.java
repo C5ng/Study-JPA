@@ -2,6 +2,7 @@ package hellojpa;
 
 import hellojpa.jpql.Member;
 import hellojpa.jpql.MemberDTO;
+import hellojpa.jpql.Team;
 import jakarta.persistence.*;
 import org.h2.command.dml.Merge;
 
@@ -19,7 +20,7 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
+            /* Member member = new Member();
             member.setUsername("member1");
             em.persist(member);
 
@@ -45,7 +46,31 @@ public class JpaMain {
             em.createQuery("select m from Member m order by m.age desc", Member.class)
                         .setFirstResult(1)
                         .setMaxResults(10)
-                        .getResultList();
+                        .getResultList(); */
+
+            /* 조인 */
+
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setAge(10);
+
+            member.changeTeam(team);
+
+            em.persist(member);
+
+            em.flush();
+            em.clear();
+
+            String query = "select m from Member m inner join m.team t";
+
+            List<Member> result = em.createQuery(query, Member.class)
+                    .getResultList();
+
+            /* 조인 */
 
             tx.commit();
         } catch (Exception e) {

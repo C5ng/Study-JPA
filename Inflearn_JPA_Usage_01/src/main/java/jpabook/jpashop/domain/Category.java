@@ -25,10 +25,16 @@ public class Category {
     )
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
     // 해당 엔티티 내에서 연관관계 매핑한다. 즉 자기를 매핑
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    /* 연관관계 편의 메서드  */
+    public void addChildCategory(Category category) {
+        child.add(category);
+        category.setParent(this);
+    }
 }

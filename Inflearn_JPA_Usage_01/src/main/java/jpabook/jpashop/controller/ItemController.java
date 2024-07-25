@@ -65,18 +65,26 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
-    @PostMapping("/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
+//    @PostMapping("/items/{itemId}/edit")
+//    public String updateItem(@ModelAttribute("form") BookForm form) {
+//        /* Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//
+//        itemService.saveItem(book); */
+//
+//
+//        return "redirect:/items";
+//    } // 엔티티를 새롭게 생성하고 있다. -> 준영속 상태
 
-        itemService.saveItem(book);
+    @PostMapping("items/{itemId}/edit")
+    public String updateItemForm(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
 
-        return "redirect:/items";
-    } // 엔티티를 새롭게 생성하고 있다. -> 준영속 상태
+        return "items/updateItemForm";
+    }
 }

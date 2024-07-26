@@ -92,4 +92,12 @@ public class OrderRepository {
 
         return query.getResultList();
     } // 쿼리가 직관적이지 않다.
+
+    public List<Order> findAllWithMemberDeilvery() {
+        return em.createQuery(
+                        "select o from Order o" +
+                                " join fetch o.member" +
+                                " join fetch o.delivery d", Order.class)
+                .getResultList(); // fetch join
+    }
 }

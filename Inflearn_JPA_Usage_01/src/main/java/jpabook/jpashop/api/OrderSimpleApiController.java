@@ -54,6 +54,15 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDeilvery();
+
+        return orders.stream()
+                .map(SimpleOrderDto::new)
+                .collect(Collectors.toList());
+    }
+
     @Data
     static class SimpleOrderDto { // DTO가 엔티티를 받는 것은 크게 문제가 되지 않는다.
         private Long orderId;

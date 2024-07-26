@@ -27,7 +27,7 @@ public class OrderRepository {
     // 검색 기능은 동적 쿼리
 
     // JPQL
-    /* public List<Order> findAll(OrderSearch orderSearch) {
+    public List<Order> findAllByString(OrderSearch orderSearch) {
         String jpql = "select o from Order o join o.member m";
         boolean isFirstCondition = true;
 
@@ -65,7 +65,7 @@ public class OrderRepository {
         }
 
         return query.getResultList();
-    } */
+    }
 
     public List<Order> findAll(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();

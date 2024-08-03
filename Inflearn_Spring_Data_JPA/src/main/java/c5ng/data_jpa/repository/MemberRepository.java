@@ -33,5 +33,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findMemberByUsername(String username); // 단건
     Optional<Member> findOptionalByUsername(String name); // 단건 Optional
 
+    @Query(value = "select m from Member m left join m.team t")
     Page<Member> findByAge(int age, Pageable pageable);
 }

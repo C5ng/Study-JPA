@@ -176,6 +176,8 @@ class MemberRepositoryTest {
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));// 스프링 Data JPA는 Page를 0번부터 시작한다.
         Page<Member> page = memberRepository.findByAge(age, pageRequest);
 
+        Page<MemberDto> memberDto = page.map(member -> new MemberDto(member.getId(), member.getUsername(), null));// 결과를 원하는 타입으로 얻을 수 있다.
+
         // then
         List<Member> content = page.getContent();
         long totalElements = page.getTotalElements();
